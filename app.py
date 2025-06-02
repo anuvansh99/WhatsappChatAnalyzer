@@ -4,10 +4,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Set page configuration
-st.set_page_config(page_title="WhatsApp Chat Analyzer", layout="wide")
+st.set_page_config(page_title="WP Wrapped", layout="wide")
 
 # Sidebar title
-st.sidebar.title("📊 WhatsApp Chat Analyzer")
+st.sidebar.title("📊 WP Wrapped")
+st.sidebar.write("Your whatsapp chat analyser!")
 
 # File uploader
 uploaded_file = st.sidebar.file_uploader("📂 Upload a WhatsApp chat file")
