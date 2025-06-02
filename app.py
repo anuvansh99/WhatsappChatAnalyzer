@@ -79,19 +79,19 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         # Heatmap
-st.subheader("🗓️ Weekly Activity Heatmap")
+        st.subheader("🗓️ Weekly Activity Heatmap")
 
-# Call the heatmap function
-user_heatmap = helper.activity_heatmap(selected_user, df)
+        # Call the heatmap function
+        user_heatmap = helper.activity_heatmap(selected_user, df)
 
-# Check if the result is valid and non-empty
-if user_heatmap is not None and not user_heatmap.empty:
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.heatmap(user_heatmap, annot=True, fmt=".0f", cmap="YlGnBu", ax=ax)
-    ax.set_title("Activity Heatmap")
-    st.pyplot(fig)
-else:
-    st.warning("No activity data available to display heatmap.")
+        # Check if the result is valid and non-empty
+        if user_heatmap is not None and not user_heatmap.empty:
+            fig, ax = plt.subplots(figsize=(10, 6))
+            sns.heatmap(user_heatmap, annot=True, fmt=".0f", cmap="YlGnBu", ax=ax)
+            ax.set_title("Activity Heatmap")
+            st.pyplot(fig)
+        else:
+            st.warning("No activity data available to display heatmap.")
 
 
 
