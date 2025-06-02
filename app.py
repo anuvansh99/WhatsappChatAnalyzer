@@ -79,13 +79,17 @@ if uploaded_file is not None:
             st.pyplot(fig)
 
         # Heatmap
-        st.subheader("🗓️ Weekly Activity Heatmap")
-        user_heatmap = helper.activity_heatmap(selected_user, df)
+st.subheader("🗓️ Weekly Activity Heatmap")
+user_heatmap = helper.activity_heatmap(selected_user, df)
 
-        fig, ax = plt.subplots(figsize=(10, 6))
-        sns.heatmap(user_heatmap, annot=True, fmt=".0f", cmap="YlGnBu", ax=ax)  # Fixed formatting for floats
-        ax.set_title("Activity Heatmap")
-        st.pyplot(fig)
+if user_heatmap is not None and not user_heatmap.empty:
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.heatmap(user_heatmap, annot=True, fmt=".0f", cmap="YlGnBu", ax=ax)
+    ax.set_title("Activity Heatmap")
+    st.pyplot(fig)
+else:
+    st.warning("No activity data available to display heatmap.")
+
 
         # Most Busy Users
         if selected_user == 'Overall':
