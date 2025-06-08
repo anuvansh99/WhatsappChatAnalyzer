@@ -2,6 +2,8 @@ import streamlit as st
 import preprocessor, helper
 import matplotlib.pyplot as plt
 import seaborn as sns
+from summarizer import summarize_last_300_messages, generate_300_message_taglines
+
 
 # Set page configuration
 st.set_page_config(page_title="WP Wrapped", layout="wide")
@@ -141,3 +143,18 @@ if uploaded_file is not None:
             ax.pie(emoji_df[1].head(), labels=emoji_df[0].head(), autopct="%0.2f", startangle=140, colors=sns.color_palette("pastel"))
             ax.set_title("Top Emojis")
             st.pyplot(fig)
+
+
+        st.header("Chat Summary and Member Taglines (Powered by Llama)")
+
+        # Assuming your preprocessed DataFrame is named 'df'
+        with st.spinner("Generating chat summary..."):
+            summary = summarize_last_300_messages(df)
+            st.subheader("Summary of Last 300 Messages")
+            st.write(summary)
+
+        with st.spinner("Generating funny taglines for members..."):
+            taglines = generate_300_message_taglines(df)
+            st.subheader("Funny Taglines for Each Member")
+            for user, tagline in taglines.items():
+                st.markdown(f"**{user}:** {tagline}")
