@@ -9,7 +9,7 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 # Place your OpenRouter API key here
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "openai/gpt-3.5-turbo"  # Use a supported model for chat completions
+MODEL = "meta-llama/llama-4-maverick:free"  # Use a supported model for chat completions
 
 def summarize_last_300_messages(df: pd.DataFrame) -> str:
     """
