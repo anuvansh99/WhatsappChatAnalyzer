@@ -19,7 +19,7 @@ def summarize_last_300_messages(df: pd.DataFrame) -> str:
     chat_text = "\n".join([msg for msg in last_300 if msg.strip()])
     prompt = (
         "You are a witty assistant. Summarize the following WhatsApp group chat in a fun and engaging way, "
-        "highlighting key moments, jokes, and group dynamics. Be concise and lively!\n\n"
+        "highlighting key moments, jokes, and group dynamics. Be concise and lively. Use 150-200 words!\n\n"
         f"{chat_text}"
     )
 
@@ -61,7 +61,7 @@ def generate_300_message_taglines(df: pd.DataFrame) -> dict:
         prompt = (
             "Based on the following WhatsApp messages, create a unique, funny, and light-hearted tagline for the user. "
             "Make it 5-7 words, and reflect their chat personality or quirks. Examples: "
-            "'King of Random Facts', 'Always Hungry, Never Late', 'Group's Resident Philosopher'.\n\n"
+            "'King of Random Facts', 'Always Hungry, Never Late', 'Group's Resident Philosopher' Your overall response should be in 20-30 words.\n\n"
             f"{user_text}"
         )
 
