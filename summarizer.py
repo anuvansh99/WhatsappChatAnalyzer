@@ -39,7 +39,7 @@ def summarize_last_300_messages(df: pd.DataFrame) -> str:
         return result["choices"][0]["message"]["content"].strip()
     except Exception as e:
         print(f"Summary generation failed: {str(e)}")
-        return "Could not generate summary."
+        return "Could not generate summary, Please try again later"
 
 def generate_300_message_taglines(df: pd.DataFrame) -> dict:
     """
@@ -82,6 +82,6 @@ def generate_300_message_taglines(df: pd.DataFrame) -> dict:
             taglines[user] = tagline
         except Exception as e:
             print(f"Tagline failed for {user}: {str(e)}")
-            taglines[user] = "Mystery Member"
+            taglines[user] = "Couldn't generate due to some technical error!"
 
     return taglines

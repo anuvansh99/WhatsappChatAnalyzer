@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WP Wrapped - WhatsApp Chat Analyzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">📊 WP Wrapped</h1>
+            <p class="subtitle fs-5 text-secondary animate__animated animate__fadeIn">Your WhatsApp Chat Analyzer!</p>
+        </div>
+        <form id="upload-form" class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mb-4 p-3 rounded shadow bg-secondary bg-gradient animate__animated animate__fadeIn">
+            <input type="file" id="chat-file" name="file" accept=".txt" required class="form-control form-control-lg bg-dark text-light border-0">
+            <button type="submit" class="btn btn-lg btn-success px-4 py-2">Upload & Analyze</button>
+        </form>
+        <!-- Loader with animated spinner and message -->
+        <div id="loader" class="loader-container hidden">
+            <div class="custom-loader"></div>
+            <div class="loader-text mt-3 fw-semibold">Analyzing the chats...<br><span class="text-secondary">This may take some time.</span></div>
+        </div>
+        <div id="user-select-section" class="hidden my-4 animate__animated animate__fadeIn">
+            <label for="user-select" class="me-2 fs-5">👤 Analyze data for:</label>
+            <select id="user-select" class="form-select d-inline-block w-auto bg-dark text-light border-secondary"></select>
+            <button id="analyze-user" class="btn btn-primary ms-2">Show Analysis</button>
+        </div>
+        <div id="results" class="hidden animate__animated animate__fadeInUp">
+            <section id="stats" class="mb-5">
+                <h2 class="mb-3">💡 Key Statistics</h2>
+                <div class="row g-3 stats-grid">
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card card bg-gradient bg-dark text-light shadow text-center p-3">
+                            <span id="stat-messages" class="fs-3 fw-bold"></span><br>📝 Total Messages
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card card bg-gradient bg-dark text-light shadow text-center p-3">
+                            <span id="stat-words" class="fs-3 fw-bold"></span><br>🔤 Total Words
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card card bg-gradient bg-dark text-light shadow text-center p-3">
+                            <span id="stat-media" class="fs-3 fw-bold"></span><br>🖼️ Media Shared
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card card bg-gradient bg-dark text-light shadow text-center p-3">
+                            <span id="stat-links" class="fs-3 fw-bold"></span><br>🔗 Links Shared
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>📅 Monthly Timeline</h2>
+                <img id="monthly-timeline" class="plot-img rounded-3 shadow my-3" alt="Monthly Timeline">
+            </section>
+            <section>
+                <h2>📆 Daily Timeline</h2>
+                <img id="daily-timeline" class="plot-img rounded-3 shadow my-3" alt="Daily Timeline">
+            </section>
+            <section>
+                <h2>📊 Activity Maps</h2>
+                <div class="row plots-row g-4">
+                    <div class="col-md-6">
+                        <img id="busy-day" class="plot-img rounded-3 shadow" alt="Most Active Days">
+                    </div>
+                    <div class="col-md-6">
+                        <img id="busy-month" class="plot-img rounded-3 shadow" alt="Most Active Months">
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>🗓️ Weekly Activity Heatmap</h2>
+                <img id="heatmap" class="plot-img rounded-3 shadow my-3" alt="Weekly Activity Heatmap">
+            </section>
+            <section id="most-busy-users-section" class="hidden">
+                <h2>👥 Most Active Users</h2>
+                <img id="most-busy-users" class="plot-img rounded-3 shadow my-3" alt="Most Active Users">
+                <table id="most-busy-users-table" class="table table-dark table-striped table-hover rounded-3 shadow"></table>
+            </section>
+            <section>
+                <h2>☁️ WordCloud</h2>
+                <img id="wordcloud" class="plot-img rounded-3 shadow my-3" alt="WordCloud">
+            </section>
+            <section>
+                <h2>📜 Most Common Words</h2>
+                <img id="common-words-bar" class="plot-img rounded-3 shadow my-3" alt="Most Common Words Bar Chart">
+            </section>
+            <section>
+                <h2>😀 Emoji Analysis</h2>
+                <img id="emoji-pie" class="plot-img rounded-3 shadow my-3" alt="Emoji Pie Chart">
+            </section>
+            <section>
+                <h2>Chat Summary and Member Taglines <span class="fw-normal text-secondary">(Powered by Llama)</span></h2>
+                <h3 class="mt-3">Summary of Last 300 Messages</h3>
+                <div id="summary" class="bg-dark text-light p-3 rounded-3 shadow-sm"></div>
+                <h3 class="mt-4">Funny Taglines for Each Member</h3>
+                <ul id="taglines-list" class="list-unstyled"></ul>
+            </section>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+body, .bg-dark {
+    background: #181c24 !important;
+    color: #e0e6ed !important;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+    background: rgba(24,28,36,0.88);
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(0,0,0,0.25);
+    padding: 40px 28px 48px 28px;
+    backdrop-filter: blur(8px);
+}
+
+h1, h2, h3, h4, h5 {
+    color: #fff !important;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.18);
+}
+
+.subtitle {
+    text-align: center;
+    color: #b0b7c3 !important;
+    margin-bottom: 1.5em;
+    letter-spacing: 0.01em;
+}
+
+form, #user-select-section {
+    background: rgba(34, 38, 49, 0.7);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+input[type="file"].form-control {
+    background: #232733 !important;
+    color: #e0e6ed !important;
+    border: 1px solid #343a40 !important;
+}
+
+button, .btn {
+    background: linear-gradient(90deg, #21d4fd 0%, #b721ff 100%);
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 28px !important;
+    font-size: 1.07em;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(33,212,253,0.08), 0 1.5px 8px rgba(183,33,255,0.06);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+button:hover, .btn:hover, .expand-btn:hover {
+    background: linear-gradient(90deg, #b721ff 0%, #21d4fd 100%);
+    box-shadow: 0 4px 24px #21d4fd44, 0 2px 12px #b721ff33;
+    transform: translateY(-2px) scale(1.04);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Loader Spinner and Message */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 28px 0 36px 0;
+    min-height: 140px;
+    animation: fadeIn 0.8s;
+}
+
+.custom-loader {
+    width: 70px;
+    height: 70px;
+    border: 8px solid #232733;
+    border-top: 8px solid #21d4fd;
+    border-bottom: 8px solid #b721ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite, glow 2s infinite alternate;
+    box-shadow: 0 0 24px #21d4fd66, 0 0 16px #b721ff44;
+    background: transparent;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+@keyframes glow {
+    0% { box-shadow: 0 0 24px #21d4fd66, 0 0 16px #b721ff44;}
+    100% { box-shadow: 0 0 48px #21d4fdcc, 0 0 32px #b721ffcc;}
+}
+.loader-text {
+    color: #fff;
+    font-size: 1.18em;
+    text-align: center;
+    letter-spacing: 0.01em;
+    text-shadow: 0 1px 4px #232733cc;
+}
+
+/* Stat cards */
+.stats-grid {
+    display: flex;
+    gap: 1em;
+    justify-content: space-around;
+    margin: 1.5em 0;
+    flex-wrap: wrap;
+}
+.stat-card {
+    background: rgba(34, 38, 49, 0.9) !important;
+    border-radius: 12px !important;
+    padding: 24px 18px !important;
+    font-size: 1.18em;
+    text-align: center;
+    min-width: 150px;
+    font-weight: bold;
+    box-shadow: 0 2px 12px #21d4fd22, 0 1.5px 8px #b721ff11;
+    color: #fff !important;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.stat-card:hover {
+    box-shadow: 0 6px 32px #21d4fd44, 0 2px 12px #b721ff33;
+    transform: scale(1.04);
+}
+
+section {
+    margin-bottom: 2.4em;
+    animation: fadeInUp 1s;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(32px);}
+    100% { opacity: 1; transform: translateY(0);}
+}
+
+/* Plots and images */
+.plot-img {
+    display: block;
+    margin: 0.5em auto 0.5em auto;
+    max-width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px #21d4fd22, 0 1.5px 8px #b721ff11;
+    background: #232733;
+    padding: 10px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    animation: fadeIn 1.2s;
+}
+.plot-img:hover {
+    box-shadow: 0 6px 32px #21d4fd44, 0 2px 12px #b721ff33;
+    transform: scale(1.03);
+}
+
+.plots-row {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    background: rgba(34, 38, 49, 0.85);
+    border-radius: 12px;
+    overflow: hidden;
+    color: #e0e6ed;
+}
+th, td {
+    padding: 12px 14px;
+    text-align: left;
+}
+th {
+    background: #232733;
+    font-weight: bold;
+    color: #21d4fd;
+}
+tr:nth-child(even) {
+    background: #232733bb;
+}
+
+ul#taglines-list {
+    list-style: none;
+    padding-left: 0;
+}
+ul#taglines-list li {
+    margin-bottom: 0.6em;
+    font-size: 1.08em;
+    background: rgba(34, 38, 49, 0.7);
+    border-radius: 8px;
+    padding: 10px 16px;
+    box-shadow: 0 1px 6px #21d4fd11;
+    color: #fff;
+}
+
+/* Table expand/collapse button and controls */
+.table-controls {
+    text-align: right;
+    margin-bottom: 1em;
+}
+
+.table-controls button,
+.expand-btn {
+    background: linear-gradient(90deg, #b721ff 0%, #21d4fd 100%);
+    color: #fff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 7px 20px !important;
+    font-size: 1em;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.table-controls button:hover,
+.expand-btn:hover {
+    background: linear-gradient(90deg, #21d4fd 0%, #b721ff 100%);
+    box-shadow: 0 2px 12px #21d4fd44, 0 1.5px 8px #b721ff33;
+    transform: scale(1.04);
+}
+
+/* Scrollbar styling for dark mode */
+::-webkit-scrollbar {
+    width: 10px;
+    background: #232733;
+}
+::-webkit-scrollbar-thumb {
+    background: #21d4fd55;
+    border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #b721ff88;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .stats-grid {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+    .stat-card {
+        min-width: auto;
+    }
+    .plots-row {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+}
+
+/* Loader container responsive */
+@media (max-width: 576px) {
+    .loader-container {
+        min-height: 120px;
+    }
+}
+
+/* Additional animations for buttons */
+.btn, .expand-btn {
+    will-change: transform, box-shadow;
+}
