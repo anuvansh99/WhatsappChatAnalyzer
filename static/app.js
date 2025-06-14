@@ -183,6 +183,7 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     showLoader(true);
     showResults(false);
     showUserSelect(false);
+    document.getElementById('quiz-section').classList.add('hidden');
 
     const fileInput = document.getElementById('chat-file');
     const file = fileInput.files[0];
@@ -216,6 +217,7 @@ document.getElementById('analyze-user').addEventListener('click', function() {
     if (!globalData) return;
     showLoader(true);
     showResults(false);
+    document.getElementById('quiz-section').classList.add('hidden');
 
     const selectedUser = document.getElementById('user-select').value;
     const fileInput = document.getElementById('chat-file');
@@ -244,3 +246,129 @@ document.getElementById('analyze-user').addEventListener('click', function() {
         showLoader(false);
     });
 });
+
+// ================== QUIZ FEATURE ==================
+
+document.getElementById('create-quiz-btn').addEventListener('click', function() {
+    const fileInput = document.getElementById('chat-file');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("Please select a WhatsApp chat .txt file first.");
+        return;
+    }
+
+    showLoader(true);
+    showResults(false);
+    showUserSelect(false);
+    document.getElementById('quiz-section').classList.add('hidden');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    fetch('/quiz', {
+        method: 'POST',
+        body: formData
+    })
+    .then(async response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        renderQuiz(data.quiz);
+    })
+    .catch(err => {
+        alert("Error creating quiz. Please try again.");
+        console.error(err);
+    })
+    .finally(() => {
+        showLoader(false);
+    });
+});
+
+function renderQuiz(quizQuestions) {
+    const quizSection = document.getElementById('quiz-section');
+    quizSection.innerHTML = '';
+    quizSection.classList.remove('hidden');
+
+    if (!quizQuestions || quizQuestions.length === 0) {
+        quizSection.innerHTML = '<div class="alert alert-warning">No quiz questions could be generated from this chat.</div>';
+        return;
+    }
+
+    // Build the quiz form
+    const form = document.createElement('form');
+    form.id = 'quiz-form';
+    form.className = 'quiz-form bg-dark text-light p-4 rounded shadow';
+
+    quizQuestions.forEach((q, idx) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'mb-4';
+
+        const qLabel = document.createElement('label');
+        qLabel.className = 'form-label fw-bold';
+        qLabel.textContent = `Q${idx + 1}. ${q.question}`;
+        qDiv.appendChild(qLabel);
+
+        q.options.forEach((option, oidx) => {
+            const optDiv = document.createElement('div');
+            optDiv.className = 'form-check';
+
+            const optInput = document.createElement('input');
+            optInput.className = 'form-check-input';
+            optInput.type = 'radio';
+            optInput.name = `q${idx}`;
+            optInput.id = `q${idx}-opt${oidx}`;
+            optInput.value = option;
+
+            const optLabel = document.createElement('label');
+            optLabel.className = 'form-check-label';
+            optLabel.htmlFor = optInput.id;
+            optLabel.textContent = option;
+
+            optDiv.appendChild(optInput);
+            optDiv.appendChild(optLabel);
+            qDiv.appendChild(optDiv);
+        });
+
+        form.appendChild(qDiv);
+    });
+
+    // Submit button
+    const submitBtn = document.createElement('button');
+    submitBtn.type = 'submit';
+    submitBtn.className = 'btn btn-primary mt-3';
+    submitBtn.textContent = 'Submit Quiz';
+    form.appendChild(submitBtn);
+
+    // Results display
+    const resultDiv = document.createElement('div');
+    resultDiv.id = 'quiz-result';
+    resultDiv.className = 'mt-4 fw-bold';
+    form.appendChild(resultDiv);
+
+    // Handle quiz submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let correct = 0;
+        let total = quizQuestions.length;
+        let feedback = [];
+
+        quizQuestions.forEach((q, idx) => {
+            const selected = form.querySelector(`input[name="q${idx}"]:checked`);
+            const userAnswer = selected ? selected.value : null;
+            if (userAnswer === q.answer) {
+                correct++;
+                feedback.push(`<div class="text-success">Q${idx + 1}: Correct!</div>`);
+            } else {
+                feedback.push(`<div class="text-danger">Q${idx + 1}: Wrong. Correct answer: <b>${q.answer}</b></div>`);
+            }
+        });
+
+        resultDiv.innerHTML = `<div class="mb-2">You scored <b>${correct}</b> out of <b>${total}</b>.</div>` + feedback.join('');
+        window.scrollTo({ top: quizSection.offsetTop, behavior: 'smooth' });
+    });
+
+    quizSection.appendChild(form);
+
+    // Hide other sections
+    showResults(false);
+    showUserSelect(false);
+}

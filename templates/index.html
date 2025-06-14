@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WP Wrapped - WhatsApp Chat Analyzer</title>
+    <title>WP Wrapped</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -10,16 +10,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .main-action-row {
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-action-btn {
+            width: 100%;
+            max-width: 350px;
+        }
+        .upload-form-box {
+            max-width: 420px;
+            margin: 0 auto 1.5rem auto;
+            padding: 1.2rem 1rem;
+        }
+        @media (max-width: 576px) {
+            .upload-form-box {
+                max-width: 98vw;
+                padding: 1rem 0.5rem;
+            }
+            .main-action-btn {
+                max-width: 100%;
+            }
+        }
+        .instructions {
+            background: rgba(30,30,30,0.7);
+            border-radius: 0.5rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body class="bg-dark text-light">
     <div class="container py-5">
-        <div class="text-center mb-4">
+        <div class="text-center mb-3">
             <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">📊 WP Wrapped</h1>
-            <p class="subtitle fs-5 text-secondary animate__animated animate__fadeIn">Your WhatsApp Chat Analyzer!</p>
+            <p class="subtitle fs-5 text-secondary animate__animated animate__fadeIn">Let us see what your Chats hold!</p>
+            <div class="instructions mx-auto mt-3 mb-2">
+                <strong>How to use:</strong><br>
+                1. Open the WhatsApp chat you want to analyze.<br>
+                2. Tap the three dots (<b>⋮</b>) &rarr; <b>More</b> &rarr; <b>Export chat</b>.<br>
+                3. Choose <b>Without Media</b> and save/send the <b>.txt</b> file to your device.<br>
+                4. <b>Upload the .txt file here</b> to analyze or take a quiz!
+            </div>
         </div>
-        <form id="upload-form" class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mb-4 p-3 rounded shadow bg-secondary bg-gradient animate__animated animate__fadeIn">
-            <input type="file" id="chat-file" name="file" accept=".txt" required class="form-control form-control-lg bg-dark text-light border-0">
-            <button type="submit" class="btn btn-lg btn-success px-4 py-2">Upload & Analyze</button>
+        <form id="upload-form" class="upload-form-box bg-secondary bg-gradient rounded shadow animate__animated animate__fadeIn">
+            <div class="row mb-2 main-action-row">
+                <div class="col-12 d-flex justify-content-center">
+                    <input type="file" id="chat-file" name="file" accept=".txt" required class="form-control form-control-lg bg-dark text-light border-0 main-action-btn">
+                </div>
+            </div>
+            <div class="row mb-2 main-action-row">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-lg btn-success main-action-btn">Analyze the Chats</button>
+                </div>
+            </div>
+            <div class="row main-action-row">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="button" id="create-quiz-btn" class="btn btn-lg btn-warning main-action-btn">A Fun Quiz from Chats</button>
+                </div>
+            </div>
         </form>
         <!-- Loader with animated spinner and message -->
         <div id="loader" class="loader-container hidden">
@@ -105,6 +158,8 @@
                 <ul id="taglines-list" class="list-unstyled"></ul>
             </section>
         </div>
+        <!-- QUIZ SECTION -->
+        <div id="quiz-section" class="hidden animate__animated animate__fadeInUp mt-5"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url_for('static', filename='app.js') }}"></script>

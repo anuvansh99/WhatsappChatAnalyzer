@@ -7,8 +7,19 @@ import seaborn as sns
 import io
 import base64
 from summarizer import summarize_last_300_messages, generate_300_message_taglines
+import quiz_generator
+import sys
+import traceback
 
 app = Flask(__name__)
+
+@app.errorhandler(500)
+def internal_error(exception):
+    print("500 error caught")
+    print(traceback.format_exc())
+    return "Internal Server Error", 500
+
+
 
 def fig_to_base64(fig):
     buf = io.BytesIO()
@@ -145,6 +156,23 @@ def analyze():
             'taglines': taglines
         })
 
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/quiz', methods=['POST'])
+def quiz():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    try:
+        data = file.read().decode('utf-8')
+        df = preprocessor.preprocess(data)
+        quiz_questions = quiz_generator.generate_quiz(df)
+        return jsonify({'quiz': quiz_questions})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
